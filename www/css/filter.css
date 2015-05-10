@@ -1,0 +1,52 @@
+.waxu-filter {
+  margin: 15px 10px;
+}
+
+.waxu-filter label {
+  border: none;
+}
+.waxu-filter .item-content {
+  padding: 10px;
+  text-align: center;
+}
+
+.waxu-filter .item-radio input:checked ~ .item-content {
+  color: white;
+  background: #67BCDB;
+}
+
+.waxu-filter .col {
+  border-right: 1px solid #cccccc;
+}
+.waxu-filter .col:last-child {
+  border: none;
+}
+
+.waxu-filter-type .row:first-child .col {
+  border-top: none;
+}
+.waxu-filter-type .row .col {
+  border-top: 1px solid #cccccc;
+}
+.waxu-filter .row:first-child col {
+
+}
+
+
+.waxu-filter-group {
+  margin: 30px 0;
+  text-align: center;
+}
+.waxu-filter-group:first-child {
+  margin: 15px 0;
+}
+.waxu-filter-group .title {
+  font-weight: bold;
+  padding-top: 15px;
+  margin: 0 15px;
+}
+.waxu-filter-group:first-child .title {
+  border: none;
+  padding: 0;
+  margin: 0;
+}

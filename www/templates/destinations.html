@@ -1,0 +1,14 @@
+<link href="/css/destinations.css" rel="stylesheet">
+<ion-view view-title="Destinations" hide-nav-bar="true">
+  <ion-content>
+    <ion-list class="waxu-destination-list" ng-controller="DestinationList">
+      <ion-item ng-repeat="destination in destinations" href="{{destination.enabled ? '#/explore/filter/'+destination.id : ''}}">
+        <div style="background-image: url('{{destination.bg}}')" class="waxu-destination-background {{destination.enabled ? '' : 'disabled'}}">
+        </div>
+        <div class="waxu-title-container {{destination.enabled ? '' : 'disabled'}}">
+          <h2>{{destination.name}}</h2>
+        </div>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>

@@ -1,0 +1,34 @@
+<ion-view view-title="Itinerary">
+  <ion-content>
+    <div class="card">
+      <div class="item item-divider">
+        Summary
+      </div>
+      <div class="item item-text-wrap">
+        <p>Start Time: {{itinerary.startTime}}</p>
+        <p>End Time: {{itinerary.endTime}}</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="item item-divider">
+        Hotel: {{itinerary.hotel.name}}
+      </div>
+      <div class="item item-text-wrap">
+        Address: {{itinerary.hotel.address}}<br/>
+        Tags: {{itinerary.hotel.tags}}
+      </div>
+    </div>
+
+    <div class="card" ng-repeat="poi in itinerary.pois[0]">
+      <div class="item item-divider">
+        POI: {{poi.name}}
+      </div>
+      <div class="item item-text-wrap">
+        Address: {{poi.address}}<br/>
+        Duration: {{poi.duration}}<br/>
+        Tags: {{poi.tags}}
+      </div>
+    </div>
+  </ion-content>
+</ion-view>
