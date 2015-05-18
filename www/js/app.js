@@ -20,7 +20,7 @@ angular.module('waxu', ['ionic', 'waxu.controllers'])
   });
 })
 
-.config(function($stateProvider, $urlRouterProvider) {
+.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
   $stateProvider
 
   .state('explore', {
@@ -83,4 +83,7 @@ angular.module('waxu', ['ionic', 'waxu.controllers'])
 
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/explore/destinations');
+
+  $ionicConfigProvider.tabs.position("bottom");
+  $ionicConfigProvider.tabs.style("standard");
 });

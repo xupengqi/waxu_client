@@ -1,96 +1,119 @@
 
 <ion-view view-title="{{destination.name}}">
+  <ion-nav-buttons side="primary">
+    <button class="button button-icon icon" ng-class="view == 'Grid' ? 'ion-ios-list-outline' : 'ion-grid'" ng-click="switchView()"></button>
+  </ion-nav-buttons>
+
   <ion-content class="waxu-scroll-content">
-    <div class="waxu-filter-group">
-      <div class="title">Budget</div>
-      <div class="card waxu-filter">
-        <div class="row">
-          <label class="item item-radio col" ng-repeat="item in budgetList">
-            <input type="radio" name="budget" value="{{item[1]}}" ng-model="filterData.budget">
+    <div ng-if="view == 'List'">
+      <div class="waxu-filter-group">
+        <div class="title">Budget</div>
+        <div class="card waxu-filter">
+          <div class="row">
+            <label class="item item-radio col" ng-repeat="item in budgetList">
+              <input type="radio" name="budget" value="{{item[1]}}" ng-model="filterData.budget">
+              <div class="item-content">
+                {{item[0]}}
+              </div>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="waxu-filter-group">
+        <div class="title">Pace</div>
+        <div class="card waxu-filter">
+          <div class="row">
+            <label class="item item-radio col" ng-repeat="item in paceList">
+              <input type="radio" name="pace" value="{{item[1]}}" ng-model="filterData.pace">
+              <div class="item-content">
+                {{item[0]}}
+              </div>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="waxu-filter-group">
+        <div class="title">Type of Travel</div>
+        <div class="card waxu-filter waxu-filter-type">
+          <div class="row">
+            <label class="item item-radio col" ng-repeat="item in typeList1">
+              <input type="checkbox"  value="{{item[1]}}" ng-model="filterData.type[item[1]]">
+              <div class="item-content">
+                {{item[0]}}
+              </div>
+            </label>
+          </div>
+          <div class="row">
+            <label class="item item-radio col" ng-repeat="item in typeList2">
+              <input type="checkbox" value="{{item[1]}}" ng-model="filterData.type[item[1]]">
+              <div class="item-content">
+                {{item[0]}}
+              </div>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="waxu-filter-group">
+        <div class="title">Type of POI</div>
+        <div class="card waxu-filter waxu-filter-type">
+          <div class="row">
+            <label class="item item-radio col" ng-repeat="item in poiList1">
+              <input type="checkbox" value="{{item[1]}}" ng-model="filterData.poi[item[1]]">
+              <div class="item-content">
+                {{item[0]}}
+              </div>
+            </label>
+          </div>
+          <div class="row">
+            <label class="item item-radio col" ng-repeat="item in poiList2">
+              <input type="checkbox" value="{{item[1]}}" ng-model="filterData.poi[item[1]]">
+              <div class="item-content">
+                {{item[0]}}
+              </div>
+            </label>
+          </div>
+          <div class="row">
+            <label class="item item-radio col" ng-repeat="item in poiList3">
+              <input type="checkbox" value="{{item[1]}}" ng-model="filterData.poi[item[1]]">
+              <div class="item-content">
+                {{item[0]}}
+              </div>
+            </label>
+          </div>
+          <div class="row">
+            <label class="item item-radio col" ng-repeat="item in poiList4">
+              <input type="checkbox" value="{{item[1]}}" ng-model="filterData.poi[item[1]]">
+              <div class="item-content">
+                {{item[0]}}
+              </div>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div ng-if="view == 'Grid'" class="waxu-filter-grid">
+      <h3 class="title">Define Your Next Adventure</h3>
+      <div class="row" style="flex-wrap: wrap;">
+        <div class="col-33" ng-repeat="item in allTags">
+          <label class="item item-radio">
+            <input type="checkbox" value="{{item[1]}}" ng-model="filterData.allTags[item[1]]">
             <div class="item-content">
-              {{item[0]}}
+              <div class="">{{item[0]}}</div>
             </div>
           </label>
         </div>
       </div>
     </div>
-
-    <div class="waxu-filter-group">
-      <div class="title">Pace</div>
-      <div class="card waxu-filter">
-        <div class="row">
-          <label class="item item-radio col" ng-repeat="item in paceList">
-            <input type="radio" name="pace" value="{{item[1]}}" ng-model="filterData.pace">
-            <div class="item-content">
-              {{item[0]}}
-            </div>
-          </label>
-        </div>
+    <div class="row">
+      <div class="col-80 col-offset-10">
+        <button class="button button-block button-balanced" ui-sref="explore.itinerary">
+          Show Itinerary
+        </button>
       </div>
     </div>
 
-    <div class="waxu-filter-group">
-      <div class="title">Type of Travel</div>
-      <div class="card waxu-filter waxu-filter-type">
-        <div class="row">
-          <label class="item item-radio col" ng-repeat="item in typeList1">
-            <input type="checkbox"  value="{{item[1]}}" ng-model="filterData.type[item[1]]">
-            <div class="item-content">
-              {{item[0]}}
-            </div>
-          </label>
-        </div>
-        <div class="row">
-          <label class="item item-radio col" ng-repeat="item in typeList2">
-            <input type="checkbox" value="{{item[1]}}" ng-model="filterData.type[item[1]]">
-            <div class="item-content">
-              {{item[0]}}
-            </div>
-          </label>
-        </div>
-      </div>
-    </div>
-
-    <div class="waxu-filter-group">
-      <div class="title">Type of POI</div>
-      <div class="card waxu-filter waxu-filter-type">
-        <div class="row">
-          <label class="item item-radio col" ng-repeat="item in poiList1">
-            <input type="checkbox" value="{{item[1]}}" ng-model="filterData.poi[item[1]]">
-            <div class="item-content">
-              {{item[0]}}
-            </div>
-          </label>
-        </div>
-        <div class="row">
-          <label class="item item-radio col" ng-repeat="item in poiList2">
-            <input type="checkbox" value="{{item[1]}}" ng-model="filterData.poi[item[1]]">
-            <div class="item-content">
-              {{item[0]}}
-            </div>
-          </label>
-        </div>
-        <div class="row">
-          <label class="item item-radio col" ng-repeat="item in poiList3">
-            <input type="checkbox" value="{{item[1]}}" ng-model="filterData.poi[item[1]]">
-            <div class="item-content">
-              {{item[0]}}
-            </div>
-          </label>
-        </div>
-        <div class="row">
-          <label class="item item-radio col" ng-repeat="item in poiList4">
-            <input type="checkbox" value="{{item[1]}}" ng-model="filterData.poi[item[1]]">
-            <div class="item-content">
-              {{item[0]}}
-            </div>
-          </label>
-        </div>
-      </div>
-    </div>
-
-    <button class="button button-block button-balanced" ui-sref="explore.itinerary">
-      Show Itinerary
-    </button>
   </ion-content>
 </ion-view>

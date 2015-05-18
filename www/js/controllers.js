@@ -23,7 +23,7 @@ angular.module('waxu.controllers', [])
 
   // Perform the login action when the user submits the login form
   $scope.doLogin = function() {
-    console.log('Doing login', $scope.loginData);
+    //console.log('Doing login', $scope.loginData);
 
     // Simulate a login delay. Remove this and replace with your login
     // code if using a login system
@@ -47,11 +47,8 @@ angular.module('waxu.controllers', [])
     budget: null,
     pace: null,
     type: {},
-    poi: {}
-  };
-
-  $scope.test = function() {
-    console.log(this);
+    poi: {},
+    allTags: {}
   };
 })
 
@@ -60,19 +57,32 @@ angular.module('waxu.controllers', [])
     $scope.destinations[i].bg = $scope.destinations[i].background[Math.floor(Math.random() * $scope.destinations[i].background.length)];
   }
 })
+
 .controller('DestinationList', function($scope) {
   $scope.Math = window.Math;
 })
+
 .controller('FilterCtrl', function($scope, $stateParams) {
+  $scope.view = "Grid";
 
   $scope.budgetList = [['Budget', 'budget'], ['Mid-range', 'mid-range'], ['Luxury', 'luxury']];
   $scope.typeList1 = [['Business', 'business'], ['Romantic', 'romantic']];
   $scope.typeList2 = [['Family', 'family-friendly'], ['Adventure', 'adventure']];
-  $scope.paceList = [['Slow', 0], ['Normal', 1], ['Fast', 2]];
+  $scope.paceList = [['Slow', 'slow-pace'], ['Normal', 'normal-pace'], ['Fast', 'fast-pace']];
   $scope.poiList1 = [['Landmarks', 'landmark'], ['Museums', 'museum'], ['Amusement Parks', 'amusement-park']];
   $scope.poiList2 = [['Local Foods', 'local-foods'], ['Nature', 'nature'], ['Outdoor Activities', 'outdoor']];
   $scope.poiList3 = [['Shopping', 'shopping'], ['Theater & Concert', 'theater'], ['Famous Restaurants', 'restaurant']];
   $scope.poiList4 = [['Tour & Activities', 'tour'], ['Nightlife', 'nighitlife'], ['Spas & Wellness', 'spa']];
+
+  $scope.allTags = [
+    ['Budget', 'budget'], ['Mid-range', 'mid-range'], ['Luxury', 'luxury'],
+    ['Business', 'business'], ['Romantic', 'romantic'], ['Family', 'family-friendly'], ['Adventure', 'adventure'],
+    ['Slow', 'slow-pace'], ['Normal', 'normal-pace'], ['Fast', 'fast-pace'],
+    ['Landmarks', 'landmark'], ['Museums', 'museum'], ['Amusement Parks', 'amusement-park'],
+    ['Local Foods', 'local-foods'], ['Nature', 'nature'], ['Outdoor Activities', 'outdoor'],
+    ['Shopping', 'shopping'], ['Theater & Concert', 'theater'], ['Famous Restaurants', 'restaurant'],
+    ['Nightlife', 'nighitlife'], ['Spas & Wellness', 'spa']
+  ];
 
   $scope.destination = null;
   for(var i=0; i<$scope.destinations.length; i++) {
@@ -83,8 +93,10 @@ angular.module('waxu.controllers', [])
 
   $scope.filterData.city = $scope.destination.id;
 
+  $scope.switchView = function() {
+    $scope.view = $scope.view == "Grid" ? "List" : "Grid";
+  };
 })
-
 
 .factory('WaxuService', function($q, $timeout, $http) {
   var urlBase = 'http://doojiaapp.com:3000/';
@@ -98,6 +110,7 @@ angular.module('waxu.controllers', [])
       getItinerary : getItinerary
   };
 })
+
 .controller('ItineraryCtrl', function($scope, $ionicLoading, WaxuService) {
   $scope.loadingIndicator = $ionicLoading.show({
     content: 'Loading Data',
@@ -108,7 +121,11 @@ angular.module('waxu.controllers', [])
   });
 
   $scope.filterData.tags = [];
-  $scope.filterData.tags.push($scope.filterData.budget);
+
+  if ($scope.filterData.budget) {
+    $scope.filterData.tags.push($scope.filterData.budget);
+  }
+
   var i;
   var typeKeys = Object.keys($scope.filterData.type);
   for (i=0; i<typeKeys.length; i++) {
@@ -116,10 +133,30 @@ angular.module('waxu.controllers', [])
       $scope.filterData.tags.push(typeKeys[i]);
     }
   }
+
   var poiKeys = Object.keys($scope.filterData.poi);
   for (i=0; i<poiKeys.length; i++) {
     if ($scope.filterData.poi[poiKeys[i]]) {
       $scope.filterData.tags.push(poiKeys[i]);
+    }
+  }
+
+  var allTagsKeys = Object.keys($scope.filterData.allTags);
+  for (i=0; i<allTagsKeys.length; i++) {
+    var tag = allTagsKeys[i];
+
+    if (!$scope.filterData.allTags[tag]) {
+      continue;
+    }
+
+    if (tag === 'budget' || tag === 'mid-range' || tag === 'luxury') {
+      $scope.filterData.budget = tag;
+    }
+    else if (tag === 'slow-pace' || tag === 'normal-pace' || tag === 'fast-pace') {
+      $scope.filterData.pace = tag;
+    }
+    else{
+      $scope.filterData.tags.push(tag);
     }
   }
 
@@ -131,7 +168,6 @@ angular.module('waxu.controllers', [])
     }
   );
 })
-
 
 .controller('PlaylistCtrl', function($scope, $stateParams) {
 });
