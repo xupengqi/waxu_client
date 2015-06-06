@@ -41,8 +41,8 @@ angular.module('waxu.controllers', [])
 
   $scope.filterData = {
     city: null,
-    from: '2015/5/1',
-    to: '2015/5/1',
+    from: moment().toDate(),
+    to: moment().toDate(),
     tags: [],
     budget: null,
     pace: null,
@@ -74,7 +74,7 @@ angular.module('waxu.controllers', [])
   $scope.poiList3 = [['Shopping', 'shopping'], ['Theater & Concert', 'theater'], ['Famous Restaurants', 'restaurant']];
   $scope.poiList4 = [['Tour & Activities', 'tour'], ['Nightlife', 'nighitlife'], ['Spas & Wellness', 'spa']];
 
-  $scope.allTags = [
+  /*$scope.allTags = [
     ['Budget', 'budget'], ['Mid-range', 'mid-range'], ['Luxury', 'luxury'],
     ['Business', 'business'], ['Romantic', 'romantic'], ['Family', 'family-friendly'], ['Adventure', 'adventure'],
     ['Slow', 'slow-pace'], ['Normal', 'normal-pace'], ['Fast', 'fast-pace'],
@@ -82,6 +82,12 @@ angular.module('waxu.controllers', [])
     ['Local Foods', 'local-foods'], ['Nature', 'nature'], ['Outdoor Activities', 'outdoor'],
     ['Shopping', 'shopping'], ['Theater & Concert', 'theater'], ['Famous Restaurants', 'restaurant'],
     ['Nightlife', 'nighitlife'], ['Spas & Wellness', 'spa']
+  ];*/
+
+  $scope.allTags = [
+    ['Luxury', 'luxury'], ['Romantic', 'romantic'], ['Family', 'family-friendly'], ['Museums', 'museum'], ['History', 'history'],
+    ['Animals', 'animals'], ['Nature', 'nature'], ['water-sports', 'water-sports'], ['Scenic', 'scenic'], ['Art', 'art'],
+    ['rollercoaster', 'rollercoaster'], ['hiking', 'hiking'], ['architecture', 'architecture']
   ];
 
   $scope.destination = null;
@@ -96,6 +102,18 @@ angular.module('waxu.controllers', [])
   $scope.switchView = function() {
     $scope.view = $scope.view == "Grid" ? "List" : "Grid";
   };
+
+  $('.waxu-filter-date').datepicker({
+    weekStart: 1,
+    startDate: moment().toDate(),
+    endDate: moment().add(1, 'year').toDate(),
+    multidate: false,
+    keyboardNavigation: false,
+    todayHighlight: true
+  }).on('changeDate', function(e) {
+    $scope.filterData.from = e.date;
+    $scope.filterData.to = e.date;
+  });
 })
 
 .factory('WaxuService', function($q, $timeout, $http) {
